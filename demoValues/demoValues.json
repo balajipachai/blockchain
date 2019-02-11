@@ -1,0 +1,6 @@
+{
+    "reEntrancy": {
+        "numberOfTokens": 1000,
+        "gas": 3000000
+    }
+}
