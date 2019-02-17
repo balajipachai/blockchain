@@ -7,8 +7,12 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "devServer": "node app.js"
+    "test": "npm run compileAll && npm run migrateReset && truffle test",
+    "devServer": "node app.js",
+    "compile": "clear && truffle compile",
+    "compileAll": "clear && truffle compile --all",
+    "migrate": "clear && truffle migrate",
+    "migrateReset": "clear && truffle migrate --reset"
   },
   "repository": {
     "type": "git",
@@ -25,6 +29,8 @@
     "levelup": "^4.0.0",
     "merkle-patricia-tree": "^3.0.0",
     "openzeppelin-solidity": "2.1.2",
-    "rlp": "^2.2.2"
+    "rlp": "^2.2.2",
+    "bignumber.js": "^8.0.2",
+    "openzeppelin-solidity": "2.1.2"
   }
 }

