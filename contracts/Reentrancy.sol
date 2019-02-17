@@ -27,9 +27,9 @@ contract Reentrant {
         myERC20Token.transfer(msg.sender, noOfTokens);
         if (myDeposits[msg.sender] > 0) {
             (success, ) = msg.sender.call("");
+            //Possibility of re-entrancy
+            myDeposits[msg.sender] = 0;
         }
-        //Possibility of re-entrancy
-        myDeposits[msg.sender] = 0;
     }
 
     /// Deposit Tokens
