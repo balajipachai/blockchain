@@ -30,7 +30,6 @@
     "merkle-patricia-tree": "^3.0.0",
     "openzeppelin-solidity": "2.1.2",
     "rlp": "^2.2.2",
-    "bignumber.js": "^8.0.2",
-    "openzeppelin-solidity": "2.1.2"
+    "bignumber.js": "^8.0.2"
   }
 }
