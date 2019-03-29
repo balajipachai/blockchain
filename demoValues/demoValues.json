@@ -1,6 +1,10 @@
 {
-    "reEntrancy": {
-        "numberOfTokens": 1000,
-        "gas": 3000000
-    }
+    "BankContract": {
+        "name": "BlockchainPayment",
+        "symbol": "BPT",
+        "decimals": 18,
+        "to": "",
+        "noOfTokens": 10000000
+    },
+    "gas": 3000000
 }
