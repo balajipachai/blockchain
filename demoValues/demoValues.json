@@ -6,5 +6,23 @@
         "to": "",
         "noOfTokens": 10000000
     },
-    "gas": 3000000
+    "UserDetails": {
+        "name": "Balaji Pachai",
+        "aadhar_number": 123456789123,
+        "mobile": 1234567890,
+        "address": "Pune, Maharashtra",
+        "gender": "Male",
+        "dob": "15/10/1998",
+        "pan": "BEODD256Q"
+    },
+
+    "BankDetails": {
+        "name": "State Bank Of India",
+        "branch": "Pune",
+        "ifsc": "SBIN000000548"
+    },
+
+    "FIXED_LIMIT": 5000,
+    "gas": 3000000,
+    "AMOUNT_TO_ADD": 4000
 }

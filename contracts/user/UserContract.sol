@@ -1,15 +1,18 @@
 pragma solidity ^0.5.0;
 import "../bank/BankContract.sol";
 import "../openZeppelin/contracts/math/SafeMath.sol";
+import "../openZeppelin/contracts/ownership/Ownable.sol";
 
-contract User {
+contract User is Ownable {
     using SafeMath for uint256;
     mapping (address => UserAccountDetails) public userAccDetails;
-    uint constant FIXED_LIMIT = 5000;
+    uint public FIXED_LIMIT;
+    mapping (address => string) public userDetails;
 
     Bank public bankAddress;
     event LogMoneyAdded(address who, uint amount, uint timestamp);
     event LogMoneySent(address sender, address receiver, uint amount, uint timestamp);
+    event LogAddUserDetails(address user, string userDetails, uint timestamp);
 
     modifier pullInMoneyLimit() {
         require(userAccDetails[msg.sender].balance <= FIXED_LIMIT, "reverted from UserContract:pullInMoneyLimit()");
@@ -21,20 +24,31 @@ contract User {
         address accountAddress;
     }
 
-    constructor (Bank _address) public {
+    constructor (Bank _address, uint _limit) public {
         bankAddress = _address;
+        FIXED_LIMIT = _limit;
     }
+
+    //Assumption: Owner is the trusted authority or Admin who adds user details
+    function addUserDetails(string memory _jsonOfUserDetails, address userAddress) public onlyOwner {
+        require(userAddress != address(0), "reverted from UserContract:addUserDetails(). userAddress cannot be address(0)");
+        userDetails[userAddress] = _jsonOfUserDetails;
+        emit LogAddUserDetails(userAddress, _jsonOfUserDetails, block.timestamp);
+    }
+
+    function getUserDetails() public view returns (string memory) {
+        return userDetails[msg.sender];
+    }
+
 
     function addMoneyToAccount(uint amount) public pullInMoneyLimit returns (bool) {
         bool status = false;
         require(msg.sender != address(0), "reverted from UserContract:addMoneyToAccount(). msg.sender cannot be address(0)");
         require(amount > 0, "reverted from UserContract:addMoneyToAccount(). amount must be greater than 0");
-        if (userAccDetails[msg.sender].balance <= FIXED_LIMIT) {
-            status = Bank(bankAddress).sendMoneyToUserAccount(msg.sender, amount);
-            if (status) {
-                userAccDetails[msg.sender].balance.add(amount);
-                emit LogMoneyAdded(msg.sender, amount, block.timestamp);
-            }
+        status = Bank(bankAddress).sendMoneyToUserAccount(msg.sender, amount);
+        if (status) {
+            userAccDetails[msg.sender].balance.add(amount);
+            emit LogMoneyAdded(msg.sender, amount, block.timestamp);
         }
         return status;
     }

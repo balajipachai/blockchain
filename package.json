@@ -12,7 +12,8 @@
     "compile": "clear && truffle compile",
     "compileAll": "clear && truffle compile --all",
     "migrate": "clear && truffle migrate",
-    "migrateReset": "clear && truffle migrate --reset"
+    "migrateReset": "clear && truffle migrate --reset",
+    "blockchainPaymentCommandLineDemo": "npm run compileAll && npm run migrateReset && node /home/balajipachai/Desktop/mastering_ethereum/my-blockchain-learning-project/blockchain/apis/demo"
   },
   "repository": {
     "type": "git",
@@ -25,7 +26,17 @@
   },
   "homepage": "https://github.com/balajipachai/blockchain#readme",
   "dependencies": {
+    "async": "^2.6.2",
+    "bignumber.js": "^8.0.2",
     "openzeppelin-solidity": "2.1.2",
-    "bignumber.js": "^8.0.2"
+    "prettyjson": "^1.2.1",
+    "truffle-contract": "^3.0.6",
+    "web3": "^0.20.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "chai-bignumber": "^2.0.2",
+    "mocha": "^5.2.0"
   }
 }

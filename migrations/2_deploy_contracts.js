@@ -8,7 +8,7 @@ module.exports = async function(deployer, network, accounts) {
         BankContract,
         demoValues.BankContract.name,
         demoValues.BankContract.symbol,
-        demoValues.BankContract.decimals
+        demoValues.BankContract.decimals,
         owner,
         demoValues.BankContract.noOfTokens,
         {
@@ -18,10 +18,11 @@ module.exports = async function(deployer, network, accounts) {
     ).then(function() {
         return deployer.deploy(
             UserContract, 
-            BankContract.address, 
+            BankContract.address,
+            demoValues.FIXED_LIMIT,
             {
                 from: owner, 
-                gas: demoValues.reEntrancy.gas
+                gas: demoValues.gas
             }
         )
     })
