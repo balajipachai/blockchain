@@ -9,8 +9,8 @@
  const demoValues = require('../demoValues/demoValues.json')
  const totalSupply = 10 ** 25
 
- let userContractInstance, bankContractInstance, bankContractInstanceAddress
-let txObject, owner, debtAgreementId
+ let bankContractInstance
+let txObject, owner
 let user1, user2, user3
 
 contract('BankContract Test Suite', async(accounts) => {
@@ -21,9 +21,7 @@ contract('BankContract Test Suite', async(accounts) => {
             user2 = accounts[2]
             user3 = accounts[3]
             bankContractInstance = await BankContract.new( demoValues.BankContract.name, demoValues.BankContract.symbol, demoValues.BankContract.decimals, owner, demoValues.BankContract.noOfTokens, { from: owner, gas: demoValues.gas })
-            bankContractInstanceAddress = bankContractInstance.address
             await bankContractInstance.transfer(bankContractInstance.address, 500000, {from: owner})
-            // console.log('contract addresses are: ', bankContractInstance.address, userContractInstance.address);  
         })
 
         describe('function sendMoneyToUserAccount(address to, uint256 value) public returns (bool)', async () => {
@@ -62,7 +60,7 @@ contract('BankContract Test Suite', async(accounts) => {
                     try {
                         txObject = await bankContractInstance.addBankDetails(bankDetails, {from:user3})    
                     } catch (error) {
-                        assert.equal(error, 'Error: Returned error: VM Exception while processing transaction: revert from Ownable:onlyOwner(). msg.sender is not the owner. -- Reason given: from Ownable:onlyOwner(). msg.sender is not the owner..')
+                        assert.equal(error, 'Error: Returned error: VM Exception while processing transaction: revert from Ownable:onlyOwner(). msg.sender is not the owner. -- Reason given: from Ownable:onlyOwner(). msg.sender is not the owner..',"Error message do not match.")
                     }
                 })
             })

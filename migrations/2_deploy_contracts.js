@@ -16,6 +16,7 @@ module.exports = async function(deployer, network, accounts) {
             gas: demoValues.gas
         }
     ).then(function() {
+        // console.log('Bank contract address: ********************', BankContract.address)
         return deployer.deploy(
             UserContract, 
             BankContract.address,

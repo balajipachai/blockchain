@@ -24,8 +24,8 @@ contract User is Ownable {
         address accountAddress;
     }
 
-    constructor (Bank _address, uint _limit) public {
-        bankAddress = _address;
+    constructor (address _address, uint _limit) public {
+        bankAddress = Bank(_address);
         FIXED_LIMIT = _limit;
     }
 
@@ -45,7 +45,7 @@ contract User is Ownable {
         bool status = false;
         require(msg.sender != address(0), "reverted from UserContract:addMoneyToAccount(). msg.sender cannot be address(0)");
         require(amount > 0, "reverted from UserContract:addMoneyToAccount(). amount must be greater than 0");
-        status = Bank(bankAddress).sendMoneyToUserAccount(msg.sender, amount);
+        status = bankAddress.sendMoneyToUserAccount(msg.sender, amount);
         if (status) {
             userAccDetails[msg.sender].balance.add(amount);
             emit LogMoneyAdded(msg.sender, amount, block.timestamp);
@@ -58,14 +58,14 @@ contract User is Ownable {
         require(amount > 0, "reverted from UserContract:sendMoney(). amount must be greater than 0");
         userAccDetails[receiver].balance.add(amount);
         userAccDetails[msg.sender].balance.sub(amount);
-        Bank(bankAddress).transferTokensAmongUser(msg.sender, receiver, amount);
+        bankAddress.transferTokensAmongUser(msg.sender, receiver, amount);
         emit LogMoneySent(msg.sender, receiver, amount, block.timestamp);
     }
 
     function sendMoneyToBank(uint amount) public {
         require(msg.sender != address(0), "reverted from UserContract:withdrawMoney(). msg.sender cannot be address(0)");
         require(amount > 0, "reverted from UserContract:withdrawMoney(). amount must be greater than 0");
-        Bank(bankAddress).transferTokensAmongUser(msg.sender,  address(bankAddress), amount);
+        bankAddress.transferTokensAmongUser(msg.sender,  address(bankAddress), amount);
         emit LogMoneySent(msg.sender,  address(bankAddress), amount, block.timestamp);
     }
 
