@@ -91,11 +91,11 @@ contract('Blockchain Payment Application Testing Suite', async (accounts) => {
 
             describe('function addMoneyToAccount(uint amount) public pullInMoneyLimit returns (bool)', async () => {
                 it('Should add money to user account', async () => {
-                    let balance = await bankContractInstance.balanceOf.call(bankContractInstance.address)
-                    console.log('balance of owner: ', balance.toNumber())
-                    balance = await userContractInstance.bankAddress.call()
-                    console.log('bankAddress from contract: ', balance)
-                    txObject = await userContractInstance.addMoneyToAccount(500, {from: user1})
+                    // let balance = await bankContractInstance.balanceOf.call(bankContractInstance.address)
+                    // console.log('balance of owner: ', balance.toNumber())
+                    // balance = await userContractInstance.bankAddress.call()
+                    // console.log('bankAddress from contract: ', balance)
+                    // txObject = await userContractInstance.addMoneyToAccount(500, {from: user1})
                 })
             })
         })
