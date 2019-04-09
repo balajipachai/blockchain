@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/balajipachai/blockchain#readme",
   "dependencies": {
+    "@0x/sol-trace": "^2.0.10",
     "async": "^2.6.2",
     "bignumber.js": "^8.0.2",
     "openzeppelin-solidity": "2.1.2",
