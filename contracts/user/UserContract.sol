@@ -42,15 +42,14 @@ contract User is Ownable {
 
 
     function addMoneyToAccount(uint amount) public pullInMoneyLimit returns (bool) {
-        bool status = false;
         require(msg.sender != address(0), "reverted from UserContract:addMoneyToAccount(). msg.sender cannot be address(0)");
         require(amount > 0, "reverted from UserContract:addMoneyToAccount(). amount must be greater than 0");
-        status = bankAddress.sendMoneyToUserAccount(msg.sender, amount);
-        if (status) {
-            userAccDetails[msg.sender].balance.add(amount);
+        if (sendMoneyThroughBank(msg.sender, amount) == true) {
+            // userAccDetails[msg.sender].balance.add(amount);
             emit LogMoneyAdded(msg.sender, amount, block.timestamp);
+            return true;
         }
-        return status;
+        return false;
     }
 
     function sendMoneyToUser(address receiver, uint amount) public {
@@ -71,5 +70,9 @@ contract User is Ownable {
 
     function checkBalance() public view returns (uint256) {
         return userAccDetails[msg.sender].balance;
+    }
+
+    function sendMoneyThroughBank(address _to, uint256 _amount) internal returns (bool) {
+        return bankAddress.sendMoneyToUserAccount(_to, _amount);
     }
 }

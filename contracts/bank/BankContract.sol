@@ -20,8 +20,7 @@ contract Bank is ERC20Mintable, ERC20Detailed, Ownable {
     }
 
     function sendMoneyToUserAccount(address to, uint256 value) public returns (bool) {
-        super.transfer(to, value);
-        return true;
+        return transfer(to, value);
     }
 
     function transferTokensAmongUser(address from, address to, uint amount) public returns (bool) {
