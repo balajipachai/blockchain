@@ -14,8 +14,8 @@ contract User is Ownable {
     event LogMoneySent(address sender, address receiver, uint amount, uint timestamp);
     event LogAddUserDetails(address user, string userDetails, uint timestamp);
 
-    modifier pullInMoneyLimit() {
-        require(userAccDetails[msg.sender].balance <= FIXED_LIMIT, "reverted from UserContract:pullInMoneyLimit()");
+    modifier pullInMoneyLimit(address _account) {
+        require(userAccDetails[_account].balance <= FIXED_LIMIT, "reverted from UserContract:pullInMoneyLimit()");
         _;
     }
 
@@ -41,7 +41,7 @@ contract User is Ownable {
     }
 
 
-    function addMoneyToAccount(uint amount) public pullInMoneyLimit returns (bool) {
+    function addMoneyToAccount(uint amount) public returns (bool) {
         bool status = false;
         require(msg.sender != address(0), "reverted from UserContract:addMoneyToAccount(). msg.sender cannot be address(0)");
         require(amount > 0, "reverted from UserContract:addMoneyToAccount(). amount must be greater than 0");
